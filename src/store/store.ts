@@ -1,5 +1,5 @@
 import { createResource, createSignal } from 'solid-js'
-import { Product } from '../types'
+import { Product } from 'types'
 
 export const [cart, setCart] = createSignal<Product[]>([])
 export const onAddToCart = (p: Product)=>setCart(cart().concat(p))
