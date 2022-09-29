@@ -1,13 +1,9 @@
+import { Link } from '@solidjs/router';
 import { Component, createMemo, For } from 'solid-js';
-import {Link} from '@solidjs/router'
-import type { Product } from "types";
 
-export const Header: Component<{
-    cart: () => Product[];
-    onClearCart: () => void;
-    search: () => string;
-    onSetSearch: (search: string) => void;
-}> = ({ cart, onClearCart, search, onSetSearch }) => {
+import { cart, onClearCart, onSetSearch, search } from '../../store';
+
+export const Header: Component = () => {
     const total = createMemo(
         () => cart().reduce((total, p) => total + p.price, 0)
     );

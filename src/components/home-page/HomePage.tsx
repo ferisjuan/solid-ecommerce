@@ -1,12 +1,8 @@
 import { Link } from "@solidjs/router";
 import { Component, createMemo, For } from 'solid-js';
-import type { Product } from "types";
+import { onAddToCart, products, search } from '../../store';
 
-export const HomePage: Component<{
-    products: () => Product[];
-    onAddToCart: (product: Product) => void;
-    search: () => string;
-}> = ({ products, onAddToCart, search }) => {
+export const HomePage: Component = () => {
     const filteredProducts = createMemo(
         () =>
             products().filter(
