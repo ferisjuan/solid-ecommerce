@@ -1,13 +1,9 @@
 import { Link } from '@solidjs/router';
-import { Component, createMemo, For } from 'solid-js';
+import { Component, For } from 'solid-js';
 
-import { cart, onClearCart, onSetSearch, search } from '../../store';
+import { cart, onSetSearch, search } from '../../store';
 
 export const Header: Component = () => {
-    const total = createMemo(
-        () => cart().reduce((total, p) => total + p.price, 0)
-    );
-
     return (
         <div class="bg-blue-900 text-white flex flex-row w-full py-4">
             <div class="text-2xl px-10 py-2">
@@ -26,9 +22,9 @@ export const Header: Component = () => {
             </div>
             <div class="px-10 py-2 justify-end has-tooltip">
                 <span class="tooltip cart">
-                    <div>Cart ({cart().length})</div>
+                    <div>Cart ({cart.products.length})</div>
                     <For
-                        each={cart()}
+                        each={cart.products}
                     >
                         {(p) => (
                             <div class="flex flex-row my-2">
@@ -45,13 +41,13 @@ export const Header: Component = () => {
                     </For>
                     <div class="flex">
                         <button
-                            onClick={onClearCart}
+                            onClick={cart.clearCart}
                             class="text-md px-8 py-1 font-bold bg-blue-800 text-white rounded-full"
                         >
                             Clear Cart
                         </button>
                         <div class="text-md text-right flex-grow justify-end ml-2">
-                            {total().toLocaleString("en-US", {
+                            {cart.total.toLocaleString("en-US", {
                                 style: "currency",
                                 currency: "USD",
                             })}
@@ -59,7 +55,7 @@ export const Header: Component = () => {
                     </div>
                 </span>
                 <i class="fas fa-shopping-cart mr-2"></i>
-                <span class="font-bold text-xl">{cart().length}</span>
+                <span class="font-bold text-xl">{cart.products.length}</span>
             </div>
         </div>
     );
